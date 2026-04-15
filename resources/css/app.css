@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --primary-blue: #3b82f6;
+        --secondary-indigo: #4f46e5;
+        --deep-slate: #0f172a;
+    }
+}
+
+@layer components {
+    .glass {
+        @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+    }
+    
+    .glass-dark {
+        @apply bg-slate-900/40 backdrop-blur-lg border border-white/10 shadow-2xl;
+    }
+
+    .mesh-gradient {
+        background-color: #0f172a;
+        background-image: 
+            radial-gradient(at 0% 0%, hsla(220,100%,15%,1) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(220,100%,20%,1) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(210,100%,25%,1) 0, transparent 50%);
+    }
+
+    .premium-card {
+        @apply transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20;
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
