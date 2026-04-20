@@ -10,6 +10,7 @@ RUN composer install \
     --prefer-dist \
     --optimize-autoloader
 
+
 FROM node:22-alpine AS frontend
 
 WORKDIR /app
@@ -19,6 +20,7 @@ RUN npm install --no-audit --no-fund
 
 COPY . .
 RUN npm run build
+
 
 FROM php:8.4-cli-alpine AS app
 
@@ -36,12 +38,11 @@ COPY --from=vendor /app/vendor ./vendor
 COPY . .
 COPY --from=frontend /app/public/build ./public/build
 
-RUN php artisan package:discover --ansi \
-    && chmod -R 775 storage bootstrap/cache
+RUN chmod -R 777 storage bootstrap/cache
 
 ENV APP_ENV=production
 ENV APP_DEBUG=false
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["sh", "-c", "php artisan config:cache && php artisan migrate --force && php artisan db:seed --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
