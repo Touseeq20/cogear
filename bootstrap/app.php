@@ -11,6 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Railway / reverse proxy ke peeche original scheme preserve karne ke liye.
+        $middleware->trustProxies(at: '*');
         $middleware->redirectUsersTo('/admin/dashboard');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
