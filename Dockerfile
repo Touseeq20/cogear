@@ -69,4 +69,4 @@ EXPOSE 10000
 # ----------------------------
 # SAFE STARTUP (IMPORTANT)
 # ----------------------------
-CMD ["sh", "-c", "php artisan optimize:clear && php artisan config:cache && php artisan migrate --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["sh", "-c", "php artisan optimize:clear && php artisan config:cache && php artisan migrate:fresh --seed --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
