@@ -103,3 +103,57 @@ window.initGSAPAnimations = function() {
 import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('navbar');
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    if (nav) {
+        const syncNav = () => {
+            nav.classList.toggle('py-0', window.scrollY > 30);
+        };
+        syncNav();
+        window.addEventListener('scroll', syncNav);
+    }
+
+    const fades = document.querySelectorAll('.fade-up');
+    if (fades.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        fades.forEach((el) => observer.observe(el));
+    }
+
+    document.querySelectorAll('[data-tilt-card]').forEach((card) => {
+        card.addEventListener('mousemove', (event) => {
+            const bounds = card.getBoundingClientRect();
+            const px = (event.clientX - bounds.left) / bounds.width;
+            const py = (event.clientY - bounds.top) / bounds.height;
+            const rx = (0.5 - py) * 8;
+            const ry = (px - 0.5) * 8;
+            card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+        });
+    });
+
+    if (typeof window.initThreeBackground === 'function') {
+        window.initThreeBackground('hero-canvas');
+    }
+    if (typeof window.initGSAPAnimations === 'function') {
+        window.initGSAPAnimations();
+    }
+});

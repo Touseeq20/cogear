@@ -1,174 +1,157 @@
 @extends('layouts.main')
 
-@section('title', 'Cogear - Innovating with AI & High-End Software')
+@section('title', 'Cogear - Premium AI & Software Agency')
 
 @section('content')
-<!-- Hero Section -->
-<section class="relative h-screen flex items-center overflow-hidden mesh-gradient">
-    <div id="hero-canvas" class="absolute inset-0 z-0 opacity-40"></div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-24">
-        <div class="max-w-4xl">
-            <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white leading-[1.1] mb-8 gsap-reveal">
-                Future-Ready <br><span class="text-blue-500">AI Solutions</span><br> for Modern Brands.
-            </h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-12 leading-relaxed max-w-2xl gsap-reveal">
-                Cogear is a global software agency crafting high-end artificial intelligence, automation, and full-stack applications that scale businesses into the 2026 digital era.
-            </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 gsap-reveal">
-                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-10 py-5 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all shadow-2xl shadow-blue-500/20">
-                    Get Started
-                </a>
-                <a href="{{ route('portfolio') }}" class="inline-flex items-center justify-center px-10 py-5 border-2 border-white/20 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all">
-                    View Portfolio
-                </a>
+@php
+    $serviceIcons = [
+        'ai development' => '<svg class="w-6 h-6 text-cyan-300" viewBox="0 0 24 24" fill="none"><path d="M12 3L19 7V17L12 21L5 17V7L12 3Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 6V9M18 9L15.5 10.5M18 15L15.5 13.5M12 18V15M6 15L8.5 13.5M6 9L8.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+        'web development' => '<svg class="w-6 h-6 text-cyan-300" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 8H21" stroke="currentColor" stroke-width="1.8"/><path d="M10 21H14M12 18V21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 12L8 14L10 16M14 12L16 14L14 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        'mobile app development' => '<svg class="w-6 h-6 text-cyan-300" viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2.4" stroke="currentColor" stroke-width="1.8"/><path d="M10.5 5.5H13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="18.5" r="1" fill="currentColor"/><path d="M4 8.5L6 10.5L4 12.5M20 8.5L18 10.5L20 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        'automation systems' => '<svg class="w-6 h-6 text-cyan-300" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19 12H22M2 12H5M12 2V5M12 19V22M17.2 6.8L19.4 4.6M4.6 19.4L6.8 17.2M17.2 17.2L19.4 19.4M4.6 4.6L6.8 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 9V12L14 13.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        'computer vision solutions' => '<svg class="w-6 h-6 text-cyan-300" viewBox="0 0 24 24" fill="none"><path d="M2.5 12C4.3 8.2 7.7 6 12 6C16.3 6 19.7 8.2 21.5 12C19.7 15.8 16.3 18 12 18C7.7 18 4.3 15.8 2.5 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.7" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 3.5L11 5M14.5 3.5L13 5M7 20.5L8.7 18.8M17 20.5L15.3 18.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    ];
+
+    $marketIcons = [
+        'Startups' => '<svg class="w-7 h-7 text-cyan-300 mx-auto mb-3" viewBox="0 0 24 24" fill="none"><path d="M11 13L19 5M19 5H13M19 5V11" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14V18C19 19.1 18.1 20 17 20H6C4.9 20 4 19.1 4 18V7C4 5.9 4.9 5 6 5H10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>',
+        'Enterprises' => '<svg class="w-7 h-7 text-cyan-300 mx-auto mb-3" viewBox="0 0 24 24" fill="none"><path d="M3 21H21M5 21V7L12 3L19 7V21M9 10H10M14 10H15M9 14H10M14 14H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        'E-commerce' => '<svg class="w-7 h-7 text-cyan-300 mx-auto mb-3" viewBox="0 0 24 24" fill="none"><path d="M3 4H5L7 15H18L20 8H8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="19" r="1.5" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="19" r="1.5" stroke="currentColor" stroke-width="1.8"/></svg>',
+        'SaaS Companies' => '<svg class="w-7 h-7 text-cyan-300 mx-auto mb-3" viewBox="0 0 24 24" fill="none"><path d="M4 8C4 6.3 5.3 5 7 5H17C18.7 5 20 6.3 20 8V16C20 17.7 18.7 19 17 19H7C5.3 19 4 17.7 4 16V8Z" stroke="currentColor" stroke-width="1.8"/><path d="M4 10H20M9 14H9.01M12 14H12.01M15 14H15.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        'Sports Analytics' => '<svg class="w-7 h-7 text-cyan-300 mx-auto mb-3" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 9.5L9.5 8L12 9L14.5 8L17.5 9.5M6.5 14.5L9.5 16L12 15L14.5 16L17.5 14.5M12 3.5V20.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    ];
+@endphp
+
+<section id="home" class="relative min-h-screen pt-32 pb-20 overflow-hidden">
+    <div id="hero-canvas" class="absolute inset-0 opacity-55"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="section-shell relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="fade-up">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-5">Building Intelligent Digital Experiences with AI & Modern Software</h1>
+                <p class="text-slate-300 text-lg mb-8">Silicon-Valley style execution for startups and enterprises with AI engineering, automation, and full-stack delivery.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="btn-primary">View Projects</a>
+                    <a href="#contact" class="btn-secondary">Contact Us</a>
+                </div>
+            </div>
+            <div class="relative fade-up">
+                <div class="device-3d rounded-3xl border border-white/10 bg-slate-900/70 p-4">
+                    <div class="rounded-2xl border border-white/10 bg-slate-950/80 p-3">
+                        <div class="aspect-[16/10] rounded-xl border border-cyan-300/20 bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-violet-500/20"></div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-8 -left-8 w-36 rounded-[1.5rem] border border-white/10 bg-slate-900/85 p-2 rotate-[-10deg]">
+                    <div class="h-52 rounded-[1.1rem] border border-cyan-300/20 bg-gradient-to-b from-cyan-500/20 to-blue-600/10"></div>
+                </div>
+                <div class="absolute -right-2 -bottom-14 w-80 max-w-[85vw] rounded-2xl border border-cyan-300/30 bg-slate-950/90 terminal-scan">
+                    <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    </div>
+                    <div class="p-4 text-sm font-mono text-cyan-200 space-y-2">
+                        <p>&gt; Cogear AI initializing...</p>
+                        <p>&gt; Deploying intelligent systems...</p>
+                        <p>&gt; Optimizing workflows...</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Services Overview -->
-<section class="py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-20">
-            <h2 class="text-4xl font-bold text-slate-900 mb-4">Our Expertise</h2>
-            <p class="text-slate-500 text-lg max-w-2xl mx-auto">We build intelligent systems that solve complex problems.</p>
-        </div>
-        
-        @php
-            $icons = [
-                'brain' => 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
-                'robot' => 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z',
-                'cog' => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
-                'shopping-cart' => 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z',
-                'heart' => 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
-                'eye' => 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
-                'chat' => 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z',
-                'database' => 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
-                'code' => 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
-                'device-mobile' => 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z',
-                'wordpress' => 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9',
-            ];
-        @endphp
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<section id="about-us" class="premium-section">
+    <div class="section-shell fade-up">
+        <h2 class="section-title mb-4">Who We Are</h2>
+        <p class="section-subtitle">Cogear is an AI-first software company delivering modern web, mobile, automation, and computer vision systems. We build scalable products with measurable business outcomes for fast-growing teams.</p>
+    </div>
+</section>
+
+<section id="services" class="premium-section">
+    <div class="section-shell">
+        <h2 class="section-title mb-10 fade-up">Services</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($services as $service)
-                <div class="p-8 rounded-3xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-2xl hover:shadow-blue-100 transition-all group" data-aos="fade-up">
-                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
-                        <svg class="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icons[$service->icon] ?? 'M13 10V3L4 14h7v7l9-11h-7z' }}" />
-                        </svg>
+                <article class="card-glow p-6 fade-up">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-400/10 border border-cyan-300/20 flex items-center justify-center mb-4">
+                        {!! $serviceIcons[strtolower(trim($service->name))] ?? '<svg class="w-6 h-6 text-cyan-300" viewBox="0 0 24 24" fill="none"><path d="M12 3L19 7V17L12 21L5 17V7L12 3Z" stroke="currentColor" stroke-width="1.8"/></svg>' !!}
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-4">{{ $service->name }}</h3>
-                    <p class="text-slate-600 leading-relaxed mb-6">{{ Str::limit($service->description, 100) }}</p>
-                    <a href="{{ route('services') }}" class="text-blue-600 font-semibold inline-flex items-center group-hover:underline">
-                        Learn more 
-                        <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                    </a>
-                </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">{{ $service->name }}</h3>
+                    <p class="text-slate-300 text-sm">{{ Str::limit($service->description, 110) }}</p>
+                </article>
             @empty
-                <!-- Static Fallback if no services in DB yet -->
-                <div class="p-8 rounded-3xl border border-slate-100 bg-slate-50" data-aos="fade-up">
-                    <h3 class="text-2xl font-bold mb-4">AI Development</h3>
-                    <p class="text-slate-600">Custom AI solutions tailored for your business needs.</p>
-                </div>
+                <article class="card-glow p-6 fade-up">
+                    <h3 class="text-xl font-semibold text-white mb-2">AI Development</h3>
+                    <p class="text-slate-300 text-sm">Custom AI solutions tailored for ambitious companies.</p>
+                </article>
             @endforelse
         </div>
     </div>
 </section>
 
-<!-- Featured Projects -->
-<section class="py-32 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 px-4">
-            <div>
-                <h2 class="text-4xl font-bold text-slate-900 mb-4">Featured Work</h2>
-                <p class="text-slate-500 text-lg">Impactful projects delivered globally.</p>
-            </div>
-            <a href="{{ route('portfolio') }}" class="mt-8 md:mt-0 inline-flex items-center text-blue-600 font-bold text-lg hover:underline transition">
-                Explore all projects <svg class="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </a>
+<section id="projects" class="premium-section">
+    <div class="section-shell">
+        <div class="flex items-end justify-between mb-10">
+            <h2 class="section-title fade-up">Projects</h2>
+            <a href="{{ route('portfolio') }}" class="text-cyan-300 hover:text-cyan-200">Explore all</a>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($projects as $project)
-                <div class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500" data-aos="zoom-in">
-                    <div class="aspect-video overflow-hidden">
-                        <img src="{{ asset('storage/' . $project->image_path) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <article class="card-glow tilt-card overflow-hidden fade-up" data-tilt-card>
+                    <div class="aspect-video overflow-hidden border-b border-white/10">
+                        <img src="{{ asset('storage/' . $project->image_path) }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
                     </div>
-                    <div class="p-8">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-white mb-2">{{ $project->title }}</h3>
+                        <p class="text-slate-300 text-sm mb-4">{{ Str::limit($project->description, 90) }}</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach($project->tech_stack as $tech)
-                                <span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-600">{{ $tech }}</span>
+                                <span class="tech-chip">{{ $tech }}</span>
                             @endforeach
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-2">{{ $project->title }}</h3>
-                        <p class="text-slate-600 mb-6">{{ Str::limit($project->description, 80) }}</p>
-                        <a href="{{ route('portfolio.show', $project->slug) }}" class="inline-flex items-center font-bold text-blue-600">
-                            Case Study <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                        </a>
+                        <a href="{{ route('portfolio.show', $project->slug) }}" class="text-cyan-300 text-sm">Case Study -></a>
                     </div>
+                </article>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<section id="target-market" class="premium-section">
+    <div class="section-shell">
+        <h2 class="section-title mb-10 fade-up">Target Market</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            @foreach(['Startups','Enterprises','E-commerce','SaaS Companies','Sports Analytics'] as $market)
+                <div class="card-glow p-5 text-center fade-up">
+                    {!! $marketIcons[$market] !!}
+                    <p class="text-white font-medium">{{ $market }}</p>
                 </div>
             @endforeach
         </div>
     </div>
 </section>
 
-<!-- Testimonials Slider -->
-<section class="py-32 bg-white overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-20">
-            <h2 class="text-4xl font-bold text-slate-900 mb-4">Client Success Stories</h2>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @forelse($testimonials as $testimonial)
-                <div class="bg-slate-50 p-10 rounded-[2.5rem] flex flex-col relative group hover:shadow-2xl hover:shadow-blue-900/5 hover:-translate-y-2 transition-all duration-300" data-aos="fade-up">
-                    <div class="mb-6 text-blue-500">
-                        <svg class="w-10 h-10 opacity-30 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9125 16 16.0171 16H19.0171C19.5694 16 20.0171 15.5523 20.0171 15V9C20.0171 8.44772 19.5694 8 19.0171 8H15.0171C14.4648 8 14.0171 7.55228 14.0171 7V4H21.0171C21.5694 4 22.0171 4.44772 22.0171 5V15C22.0171 18.3137 19.3308 21 16.0171 21H14.0171ZM3.01709 21L3.01709 18C3.01709 16.8954 3.91253 16 5.01709 16H8.01709C8.56937 16 9.01709 15.5523 9.01709 15V9C9.01709 8.44772 8.56937 8 8.01709 8H4.01709C3.46481 8 3.01709 7.55228 3.01709 7V4H10.0171C10.5694 4 11.0171 4.44772 11.0171 5V15C11.0171 18.3137 8.33075 21 5.01709 21H3.01709Z"/></svg>
-                    </div>
-                    <p class="text-lg text-slate-700 leading-relaxed mb-8 italic flex-grow">
-                        "{{ $testimonial->message }}"
-                    </p>
-                    <div class="mt-auto border-t border-slate-200 pt-6">
-                        <h4 class="text-lg font-bold text-slate-900">{{ $testimonial->client_name }}</h4>
-                        <p class="text-sm text-blue-600 font-medium">{{ $testimonial->company }}</p>
-                    </div>
-                </div>
-            @empty
-                <div class="col-span-1 md:col-span-3 text-center text-slate-500 py-10 italic">
-                    More client stories coming soon.
-                </div>
-            @endforelse
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="py-32 px-4 bg-white">
-    <div class="max-w-7xl mx-auto p-12 md:p-24 rounded-[3.5rem] mesh-gradient text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 gsap-reveal">
-        <div class="relative z-10">
-            <h2 class="text-4xl md:text-7xl font-bold mb-8 tracking-tight">Ready to Build <span class="text-blue-400">Something Incredible?</span></h2>
-            <p class="text-xl text-blue-100/80 mb-12 max-w-2xl mx-auto leading-relaxed">Join us on the journey to innovate. Let's discuss your next breakthrough project today and redefine what's possible.</p>
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="{{ route('contact') }}" class="px-12 py-5 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-xl shadow-blue-500/20">Consultation Request</a>
-                <a href="{{ route('careers') }}" class="px-12 py-5 border-2 border-white/20 text-white rounded-full font-bold text-lg hover:bg-white/10 hover:border-white transition-all duration-300">Join the Team</a>
+<section id="contact" class="premium-section pb-28">
+    <div class="section-shell grid lg:grid-cols-2 gap-6">
+        <div class="card-glow p-7 fade-up">
+            <h2 class="section-title text-3xl mb-4">Contact Us</h2>
+            <p class="text-slate-300 mb-6">Let's plan your next AI product or software platform.</p>
+            <div class="space-y-3 text-slate-200">
+                <p class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none"><path d="M4 6L12 12L20 6M5 5H19C20.1 5 21 5.9 21 7V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7C3 5.9 3.9 5 5 5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Email: mtouseeq20@gmail.com</span>
+                </p>
+                <p class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8C8.2 14 10 15.8 13.2 17.4L15.7 14.9C16 14.6 16.5 14.5 16.9 14.6C18 14.9 19.1 15 20.2 15C20.8 15 21.3 15.5 21.3 16.1V20.1C21.3 20.7 20.8 21.2 20.2 21.2C10.6 21.2 2.8 13.4 2.8 3.8C2.8 3.2 3.3 2.7 3.9 2.7H7.9C8.5 2.7 9 3.2 9 3.8C9 4.9 9.1 6 9.4 7.1C9.5 7.5 9.4 8 9.1 8.3L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Phone: +92 330 1540904</span>
+                </p>
+                <p class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-cyan-300" viewBox="0 0 24 24" fill="none"><path d="M12 21C16 16.7 18 13.4 18 10C18 6.7 15.3 4 12 4C8.7 4 6 6.7 6 10C6 13.4 8 16.7 12 21Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.8"/></svg>
+                    <span>Location: Manchester, UK</span>
+                </p>
             </div>
         </div>
-        <!-- Ultra-premium decorative elements -->
-        <div class="absolute -top-40 -left-40 w-[30rem] h-[30rem] bg-blue-500/10 rounded-full blur-[100px]"></div>
-        <div class="absolute -bottom-40 -right-40 w-[30rem] h-[30rem] bg-indigo-500/10 rounded-full blur-[100px]"></div>
+        <div class="card-glow p-2 fade-up overflow-hidden">
+            <iframe title="Cogear Location Map" src="https://maps.google.com/maps?q=Manchester%20M12%206FA&t=&z=13&ie=UTF8&iwloc=&output=embed" class="w-full h-[330px] rounded-2xl border-0"></iframe>
+        </div>
     </div>
 </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof initThreeBackground === 'function') {
-                initThreeBackground('hero-canvas');
-            }
-            if (typeof initGSAPAnimations === 'function') {
-                initGSAPAnimations();
-            }
-        });
-    </script>
 @endsection
