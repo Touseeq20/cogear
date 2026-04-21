@@ -9,13 +9,13 @@
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-24">
         <div class="max-w-4xl">
-            <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white leading-[1.1] mb-8 gsap-reveal">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tight text-white leading-[1.1] mb-8" data-aos="fade-right">
                 Future-Ready <br><span class="text-blue-500">AI Solutions</span><br> for Modern Brands.
             </h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-12 leading-relaxed max-w-2xl gsap-reveal">
+            <p class="text-xl md:text-2xl text-slate-300 mb-12 leading-relaxed max-w-2xl" data-aos="fade-right" data-aos-delay="100">
                 Cogear is a global software agency crafting high-end artificial intelligence, automation, and full-stack applications that scale businesses into the 2026 digital era.
             </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 gsap-reveal">
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6" data-aos="fade-right" data-aos-delay="200">
                 <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-10 py-5 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-white hover:text-blue-600 transition-all shadow-2xl shadow-blue-500/20">
                     Get Started
                 </a>
@@ -52,11 +52,11 @@
         @endphp
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @forelse($services as $service)
+            @forelse($services ?? [] as $service)
                 <div class="p-8 rounded-3xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-2xl hover:shadow-blue-100 transition-all group" data-aos="fade-up">
                     <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
                         <svg class="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icons[$service->icon] ?? 'M13 10V3L4 14h7v7l9-11h-7z' }}" />
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icons[strtolower($service->icon)] ?? 'M13 10V3L4 14h7v7l9-11h-7z' }}" />
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold text-slate-900 mb-4">{{ $service->name }}</h3>
@@ -67,11 +67,7 @@
                     </a>
                 </div>
             @empty
-                <!-- Static Fallback if no services in DB yet -->
-                <div class="p-8 rounded-3xl border border-slate-100 bg-slate-50" data-aos="fade-up">
-                    <h3 class="text-2xl font-bold mb-4">AI Development</h3>
-                    <p class="text-slate-600">Custom AI solutions tailored for your business needs.</p>
-                </div>
+                <div class="col-span-3 text-center text-slate-400 py-12 italic">Services information coming soon.</div>
             @endforelse
         </div>
     </div>
@@ -91,19 +87,23 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
-            @foreach($projects as $project)
-                <div class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500" data-aos="zoom-in">
+            @foreach($projects ?? [] as $project)
+                <div class="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
                     <div class="aspect-video overflow-hidden">
-                        <img src="{{ asset('storage/' . $project->image_path) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        @if($project->image_path)
+                            <img src="{{ asset('storage/' . $project->image_path) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        @else
+                            <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400 font-bold">IMAGE</div>
+                        @endif
                     </div>
                     <div class="p-8">
                         <div class="flex flex-wrap gap-2 mb-4">
-                            @foreach($project->tech_stack as $tech)
+                            @foreach($project->tech_stack ?? [] as $tech)
                                 <span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-600">{{ $tech }}</span>
                             @endforeach
                         </div>
                         <h3 class="text-2xl font-bold text-slate-900 mb-2">{{ $project->title }}</h3>
-                        <p class="text-slate-600 mb-6">{{ Str::limit($project->description, 80) }}</p>
+                        <p class="text-slate-600 mb-6">{{ Str::limit($project->description ?? '', 80) }}</p>
                         <a href="{{ route('portfolio.show', $project->slug) }}" class="inline-flex items-center font-bold text-blue-600">
                             Case Study <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
@@ -122,7 +122,7 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @forelse($testimonials as $testimonial)
+            @forelse($testimonials ?? [] as $testimonial)
                 <div class="bg-slate-50 p-10 rounded-[2.5rem] flex flex-col relative group hover:shadow-2xl hover:shadow-blue-900/5 hover:-translate-y-2 transition-all duration-300" data-aos="fade-up">
                     <div class="mb-6 text-blue-500">
                         <svg class="w-10 h-10 opacity-30 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9125 16 16.0171 16H19.0171C19.5694 16 20.0171 15.5523 20.0171 15V9C20.0171 8.44772 19.5694 8 19.0171 8H15.0171C14.4648 8 14.0171 7.55228 14.0171 7V4H21.0171C21.5694 4 22.0171 4.44772 22.0171 5V15C22.0171 18.3137 19.3308 21 16.0171 21H14.0171ZM3.01709 21L3.01709 18C3.01709 16.8954 3.91253 16 5.01709 16H8.01709C8.56937 16 9.01709 15.5523 9.01709 15V9C9.01709 8.44772 8.56937 8 8.01709 8H4.01709C3.46481 8 3.01709 7.55228 3.01709 7V4H10.0171C10.5694 4 11.0171 4.44772 11.0171 5V15C11.0171 18.3137 8.33075 21 5.01709 21H3.01709Z"/></svg>
@@ -146,7 +146,7 @@
 
 <!-- CTA Section -->
 <section class="py-32 px-4 bg-white">
-    <div class="max-w-7xl mx-auto p-12 md:p-24 rounded-[3.5rem] mesh-gradient text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 gsap-reveal">
+    <div class="max-w-7xl mx-auto p-12 md:p-24 rounded-[3.5rem] mesh-gradient text-center text-white relative overflow-hidden shadow-2xl shadow-blue-900/20" data-aos="zoom-in">
         <div class="relative z-10">
             <h2 class="text-4xl md:text-7xl font-bold mb-8 tracking-tight">Ready to Build <span class="text-blue-400">Something Incredible?</span></h2>
             <p class="text-xl text-blue-100/80 mb-12 max-w-2xl mx-auto leading-relaxed">Join us on the journey to innovate. Let's discuss your next breakthrough project today and redefine what's possible.</p>
@@ -161,14 +161,11 @@
     </div>
 </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof initThreeBackground === 'function') {
-                initThreeBackground('hero-canvas');
-            }
-            if (typeof initGSAPAnimations === 'function') {
-                initGSAPAnimations();
-            }
-        });
-    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof initThreeBackground === 'function') {
+            initThreeBackground('hero-canvas');
+        }
+    });
+</script>
 @endsection
