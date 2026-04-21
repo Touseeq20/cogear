@@ -1,22 +1,10 @@
+{{-- NEW PREMIUM REDESIGN --}}
 @extends('layouts.main')
 @section('title', 'Careers - Join the Cogear Team')
-@section('meta_description', 'Building the future with Cogear – Professional internships and course learning programs.')
+@section('meta_description', 'Join Cogear – Build the future with our project-based internships and intensive course learning programs.')
 
 @push('styles')
 <style>
-/* Careers Design Tokens */
-:root {
-    --bg-primary: #020617;
-    --bg-secondary: #0f172a;
-    --bg-card: rgba(30, 41, 59, 0.5);
-    --border: rgba(255, 255, 255, 0.1);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --blue: #3b82f6;
-    --cyan: #06b6d4;
-    --violet: #8b5cf6;
-}
-
 .careers-hero {
     padding: 10rem 0 6rem;
     background: var(--bg-primary);
@@ -25,7 +13,7 @@
 }
 .careers-hero::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:800px; height:500px; border-radius:50%; background:radial-gradient(ellipse,rgba(59,130,246,0.08) 0%,transparent 70%); pointer-events:none; }
 .careers-hero-inner { max-width:1320px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
-.careers-hero h1 { font-size:clamp(2.5rem,5vw,4.5rem); font-weight:900; letter-spacing:-0.03em; margin:1.5rem 0; color: #fff; }
+.careers-hero h1 { font-size:clamp(2.5rem,5vw,4.5rem); font-weight:900; letter-spacing:-0.03em; margin:1.5rem 0; }
 .careers-hero p { color:var(--text-secondary); font-size:1.1rem; max-width:620px; margin:0 auto; line-height:1.8; }
 
 /* Grid layout */
@@ -38,7 +26,6 @@
     background:var(--bg-card); border:1px solid var(--border);
     border-radius:28px; padding:2.5rem;
     transition:all 0.4s ease; position:relative; overflow:hidden;
-    backdrop-filter: blur(8px);
 }
 .program-card::after {
     content:''; position:absolute; right:0; top:0; width:120px; height:120px;
@@ -53,7 +40,7 @@
     margin-bottom:1.5rem; border:1px solid rgba(59,130,246,0.2);
 }
 .prog-icon svg { color:var(--blue); }
-.program-card h3 { font-size:1.5rem; font-weight:800; margin-bottom:1rem; color: #fff; }
+.program-card h3 { font-size:1.5rem; font-weight:800; margin-bottom:1rem; }
 .program-card p { color:var(--text-secondary); line-height:1.75; margin-bottom:2rem; font-size:0.95rem; }
 
 .prog-benefits { list-style:none; padding:0; display:flex; flex-direction:column; gap:0.9rem; }
@@ -66,10 +53,9 @@
     border-radius:32px; padding:3rem;
     box-shadow:0 30px 80px rgba(0,0,0,0.4);
     position:relative; z-index:2;
-    backdrop-filter: blur(12px);
 }
 .apply-header { margin-bottom:2.5rem; }
-.apply-header h2 { font-size:1.8rem; font-weight:900; margin-bottom:0.5rem; color: #fff; }
+.apply-header h2 { font-size:1.8rem; font-weight:900; margin-bottom:0.5rem; }
 .apply-header p { color:var(--text-secondary); font-size:0.9rem; }
 
 .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
@@ -125,12 +111,6 @@
     .form-field.full { grid-column:span 1; }
     .apply-form-wrap { padding:1.75rem; }
 }
-
-.gradient-text {
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
 </style>
 @endpush
 
@@ -138,8 +118,8 @@
 
 <!-- Hero -->
 <section class="careers-hero">
-    <div class="careers-hero-inner" data-aos="fade-up">
-        <span style="font-size:0.8rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:1rem;">Join Cogear</span>
+    <div class="careers-hero-inner reveal">
+        <span class="section-tag">Join Cogear</span>
         <h1>Build the Future<br><span class="gradient-text">With Us.</span></h1>
         <p>We are looking for passionate, high-potential individuals ready to work on live AI and software projects. Real experience, no fake certificates.</p>
     </div>
@@ -150,8 +130,8 @@
     <div class="careers-main-inner">
         
         <!-- Left: Programs -->
-        <div class="programs-col" data-aos="fade-right">
-            <h2 style="font-size:2rem;font-weight:900;margin-bottom:2.5rem; color: #fff;">Our Professional <span class="gradient-text">Programs</span></h2>
+        <div class="programs-col reveal-left">
+            <h2 style="font-size:2rem;font-weight:900;margin-bottom:2.5rem">Our Professional <span class="gradient-text">Programs</span></h2>
             
             <!-- Program 1 -->
             <div class="program-card">
@@ -183,7 +163,7 @@
         </div>
 
         <!-- Right: Apply -->
-        <div data-aos="fade-left">
+        <div class="reveal-right">
             <div class="apply-form-wrap">
                 <div class="apply-header">
                     <h2>Apply Now</h2>
@@ -191,7 +171,7 @@
                 </div>
 
                 @if(session('success'))
-                    <div class="alert-success">
+                    <div class="alert-success reveal d1">
                         <div style="display:flex;gap:0.75rem;align-items:center;">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                             <strong>{{ session('success') }}</strong>
@@ -203,45 +183,45 @@
                     @csrf
                     <div class="form-grid">
                         <div class="form-field">
-                            <label class="form-label" for="apply-name">Full Name</label>
-                            <input type="text" id="apply-name" name="name" class="form-input" placeholder="John Doe" value="{{ old('name') }}" required>
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-input" placeholder="John Doe" required>
                         </div>
                         <div class="form-field">
-                            <label class="form-label" for="apply-email">Email Address</label>
-                            <input type="email" id="apply-email" name="email" class="form-input" placeholder="john@email.com" value="{{ old('email') }}" required>
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-input" placeholder="john@email.com" required>
                         </div>
                         <div class="form-field">
-                            <label class="form-label" for="apply-phone">Phone</label>
-                            <input type="text" id="apply-phone" name="phone" class="form-input" placeholder="+44 20 7123" value="{{ old('phone') }}" required>
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-input" placeholder="+44 20 7123" required>
                         </div>
                         <div class="form-field">
-                            <label class="form-label" for="apply-interest">Interest</label>
-                            <select id="apply-interest" name="field_of_interest" class="form-select" required>
+                            <label class="form-label">Interest</label>
+                            <select name="field_of_interest" class="form-select" required>
                                 <option value="" disabled selected>Select an area...</option>
-                                <option value="Web Development" {{ old('field_of_interest') == 'Web Development' ? 'selected' : '' }}>Web Development</option>
-                                <option value="AI / LLMs" {{ old('field_of_interest') == 'AI / LLMs' ? 'selected' : '' }}>AI / LLMs</option>
-                                <option value="Mobile Apps" {{ old('field_of_interest') == 'Mobile Apps' ? 'selected' : '' }}>Mobile Apps</option>
-                                <option value="Full Stack" {{ old('field_of_interest') == 'Full Stack' ? 'selected' : '' }}>Full Stack</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="AI / LLMs">AI / LLMs</option>
+                                <option value="Mobile Apps">Mobile Apps</option>
+                                <option value="Full Stack">Full Stack</option>
                             </select>
                         </div>
                         
                         <div class="form-field full">
-                            <label class="form-label" for="apply-cv">Resumé (PDF)</label>
-                            <div class="file-upload-block" id="file-upload-container">
-                                <input type="file" id="apply-cv" name="cv" accept=".pdf" required onchange="handleFileChange(this)">
+                            <label class="form-label">Resumé (PDF)</label>
+                            <div class="file-upload-block" onclick="this.querySelector('input').click()">
+                                <input type="file" name="cv" accept=".pdf" required onchange="this.nextElementSibling.querySelector('.file-name').textContent = this.files[0].name; this.parentElement.style.borderColor = 'var(--blue)'">
                                 <div class="upload-content">
                                     <div class="upload-icon">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
                                     </div>
-                                    <p class="upload-text" id="file-name-display">Click to upload PDF</p>
+                                    <p class="upload-text file-name">Click to upload PDF</p>
                                     <p class="upload-sub">Max file size 5MB</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-field full">
-                            <label class="form-label" for="apply-message">Introduce Yourself</label>
-                            <textarea id="apply-message" name="message" class="form-textarea" placeholder="Tell us why you want to join Cogear..." required>{{ old('message') }}</textarea>
+                            <label class="form-label">Introduce Yourself</label>
+                            <textarea name="message" class="form-textarea" placeholder="Tell us why you want to join Cogear..." required></textarea>
                         </div>
                     </div>
 
@@ -256,24 +236,3 @@
 </section>
 
 @endsection
-
-@push('scripts')
-<script>
-function handleFileChange(input) {
-    const display = document.getElementById('file-name-display');
-    const container = document.getElementById('file-upload-container');
-    
-    // Robust check for file selection or cancellation
-    if (input.files && input.files.length > 0) {
-        display.textContent = input.files[0].name;
-        container.style.borderColor = 'var(--blue)';
-        container.style.backgroundColor = 'rgba(59, 130, 246, 0.05)';
-    } else {
-        // Reset if canceled or no file
-        display.textContent = 'Click to upload PDF';
-        container.style.borderColor = '';
-        container.style.backgroundColor = '';
-    }
-}
-</script>
-@endpush
