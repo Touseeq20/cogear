@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Default Admin User
-        User::query()->create([
-            'name' => 'Cogear Admin',
-            'email' => 'admin@cogear.agency',
-            'password' => bcrypt('password'),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-        ]);
+        User::query()->updateOrCreate(
+            ['email' => 'admin@cogear.agency'],
+            [
+                'name' => 'Cogear Admin',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
+            ]
+        );
 
         $this->call([
             ServiceSeeder::class,
